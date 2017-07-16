@@ -1,3 +1,5 @@
+# ClojureScript REPL et. al
+.cljs*
 pom.xml
 *jar
 /lib/
