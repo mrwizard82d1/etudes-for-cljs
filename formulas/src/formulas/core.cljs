@@ -29,3 +29,13 @@
   "Calculates the gravitational force between two objects of masses, `m1` and `m2`, separated by a distance, `r`."
   [m1 m2 r]
   (/ (* G m1 m2) (* r r))) 
+
+(defn monthly-payment
+  "Calculate the monthly payment for a loan of principle, `p`, a term of `y` years, and an annual interest rate
+(percentage) of `i`."
+  [p i y]
+  (let [r (/ i 100 12) ;; monthly rate
+        n (* y 12) ;; term (number of months)
+        compounded-interest (.pow js/Math (+ 1 r) n) ;; interest on $1 over term
+        ]
+    (* p r (/ compounded-interest (- compounded-interest 1)))))
