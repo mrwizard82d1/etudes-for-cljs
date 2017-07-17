@@ -39,3 +39,38 @@
         compounded-interest (.pow js/Math (+ 1 r) n) ;; interest on $1 over term
         ]
     (* p r (/ compounded-interest (- compounded-interest 1)))))
+
+(defn radians
+  "Convert degrees (of latitute) to radians."
+  [degrees]
+  (* (/ (.-PI js/Math) 180) degrees))
+
+(defn daylight
+  "Calculates the amount of daylight, in minutes, for the day, `julian-day` for a location on `latitude`.
+
+   This function uses the algorithm described at 
+   http://mathforum.org/library/drmath/view/56478.html."
+  [julian-day latitude-degrees]
+  (let [arcsin #(.asin js/Math %)
+        arccos #(.acos js/Math %)
+        arctan #(.atan js/Math %)
+        sin #(.sin js/Math %)
+        cos #(.cos js/Math %)
+        tan #(.tan js/Math %)
+        latitude (radians latitude-degrees)
+        P (arcsin (* 0.39795
+                     (cos (+ 0.2163108
+                             (* 2 
+                                (arctan (* 0.9671396
+                                           (tan (* 0.00860
+                                                   (- julian-day 186))))))))))
+        D (- 24
+             (* 7.63944
+                (arccos (/ (+ (sin 0.01454)
+                              (* (sin latitude)
+                                 (sin P)))
+                           (* (cos latitude)
+                              (cos P))))))]
+    (* 60 D) ;; convert daylight hours to minutes
+    ))
+
