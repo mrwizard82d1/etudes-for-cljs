@@ -15,11 +15,16 @@
   ;; (swap! app-state update-in [:__figwheel_counter] inc)
 )
 
+(defn getElement
+  "Get the DOM element identified by `id` in `document`."
+  [document id]
+  (.getElementById document id))
+
 (defn get-numeric-value
   "Gets a numeric value from component identified by `id` in `document`."
   [id document]
   (->> id
-       (.getElementById document)
+       (getElement document)
        (.-value)
        (.parseFloat js/window)))
 
@@ -36,11 +41,11 @@
 (defn on-calculate [evt]
   (let [latitude (get-latitude js/document)
         day-of-year (get-day-of-year js/document)
-        daylight (formulas/daylight-in-minutes day-of-year latitude)]
+        daylight (formulas/daylight-in-minutes day-of-year (get-latitude js/document))]
     (set! (->> "result"
-               (.getElementById js/document)
+               (getElement js/document)
                (.-innerHTML))
           daylight)))
 
-(let [btn (.getElementById js/document "calculate")]
+(let [btn (getElement js/document "calculate")]
   (.addEventListener btn "click" on-calculate))
