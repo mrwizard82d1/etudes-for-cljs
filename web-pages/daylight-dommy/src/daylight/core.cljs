@@ -1,7 +1,6 @@
 (ns daylight.core
   (:require [daylight.formulas :as formulas]
-            [goog.dom :as dom]
-            [goog.events :as events]))
+            [dommy.core :as dommy :refer-macros [sel sel1]]))
 
 (enable-console-print!)
 
@@ -21,25 +20,25 @@
   "Gets a numeric value from component identified by `id`."
   [id]
   (->> id
-       (dom/getElement)
+       (sel1)
        (.-value)
        (.parseFloat js/window)))
 
 (defn get-latitude
   "Get the latitude from the appropriate control on the page."
   []
-  (get-numeric-value "latitude"))
+  (get-numeric-value :#latitude))
 
 (defn get-day-of-year
   "Get the day of year (Julian day) from the appropriate control on the page."
   []
-  (get-numeric-value "julian"))
+  (get-numeric-value :#julian))
 
 (defn on-calculate [evt]
   (let [latitude (get-latitude)
         day-of-year (get-day-of-year)
         daylight (formulas/daylight-in-minutes day-of-year latitude)]
-    (dom/setTextContent (dom/getElement "result") daylight)))
+    (dommy/set-text! (sel1 :#result) daylight)))
 
-(let [btn (dom/getElement "calculate")]
-  (events/listen btn "click" on-calculate))
+(let [btn (sel1 :#calculate)]
+  (dommy/listen! btn :click on-calculate))

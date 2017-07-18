@@ -1,4 +1,4 @@
-# daylight-gc
+# daylight-dommy
 
 "Application" to display the minutes of daylight for a latitude and a day of a year.
 
