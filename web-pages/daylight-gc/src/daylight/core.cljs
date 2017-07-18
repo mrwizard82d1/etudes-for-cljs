@@ -1,5 +1,7 @@
 (ns daylight.core
-  (:require [daylight.formulas :as formulas]))
+  (:require [daylight.formulas :as formulas]
+            [goog.dom :as dom]
+            [goog.events :as events]))
 
 (enable-console-print!)
 
@@ -15,37 +17,29 @@
   ;; (swap! app-state update-in [:__figwheel_counter] inc)
 )
 
-(defn getElement
-  "Get the DOM element identified by `id` in `document`."
-  [document id]
-  (.getElementById document id))
-
 (defn get-numeric-value
-  "Gets a numeric value from component identified by `id` in `document`."
-  [id document]
+  "Gets a numeric value from component identified by `id`."
+  [id]
   (->> id
-       (getElement document)
+       (dom/getElement)
        (.-value)
        (.parseFloat js/window)))
 
 (defn get-latitude
   "Get the latitude from the appropriate control on the page."
-  [document]
-  (get-numeric-value "latitude" document))
+  []
+  (get-numeric-value "latitude"))
 
 (defn get-day-of-year
   "Get the day of year (Julian day) from the appropriate control on the page."
-  [document]
-  (get-numeric-value "julian" document))
+  []
+  (get-numeric-value "julian"))
 
 (defn on-calculate [evt]
-  (let [latitude (get-latitude js/document)
-        day-of-year (get-day-of-year js/document)
-        daylight (formulas/daylight-in-minutes day-of-year (get-latitude js/document))]
-    (set! (->> "result"
-               (getElement js/document)
-               (.-innerHTML))
-          daylight)))
+  (let [latitude (get-latitude)
+        day-of-year (get-day-of-year)
+        daylight (formulas/daylight-in-minutes day-of-year latitude)]
+    (dom/setTextContent (dom/getElement "result") daylight)))
 
-(let [btn (getElement js/document "calculate")]
-  (.addEventListener btn "click" on-calculate))
+(let [btn (dom/getElement "calculate")]
+  (events/listen btn "click" on-calculate))
