@@ -1,4 +1,4 @@
-(ns my-javascript.formulas)
+(ns daylight-js.formulas)
 
 (defn distance 
   "Calculate the distance travelled by an object with acceleration, `a` for time, `t`."

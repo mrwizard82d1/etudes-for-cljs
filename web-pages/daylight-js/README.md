@@ -1,10 +1,10 @@
-# my-javascript
+# daylight-js
 
-FIXME: Write a one-line description of your library/project.
+JavaScript "Application" to display the minutes of daylight for a latitude and a day of a year.
 
 ## Overview
 
-FIXME: Write a paragraph about the library/project and highlight its goals.
+JavaScript "Application" to display the minutes of daylight for a latitude and a day of a year.
 
 ## Setup
 

@@ -1,9 +1,9 @@
-(ns my-javascript.core
-  (:require [my-javascript.formulas :as formulas]))
+(ns daylight-js.core
+  (:require [daylight-js.formulas :as formulas]))
 
 (enable-console-print!)
 
-(println "This text is printed from src/my-javascript/core.cljs. Go ahead and edit it and see reloading in action.")
+(println "This text is printed from src/daylight-js/core.cljs. Go ahead and edit it and see reloading in action.")
 
 ;; define your app data so that it doesn't get over-written on reload
 
