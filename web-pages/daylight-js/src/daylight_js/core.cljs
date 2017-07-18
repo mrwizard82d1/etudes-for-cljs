@@ -41,7 +41,7 @@
 (defn on-calculate [evt]
   (let [latitude (get-latitude js/document)
         day-of-year (get-day-of-year js/document)
-        daylight (formulas/daylight-in-minutes day-of-year (get-latitude js/document))]
+        daylight (formulas/daylight-in-minutes day-of-year latitude)]
     (set! (->> "result"
                (getElement js/document)
                (.-innerHTML))
